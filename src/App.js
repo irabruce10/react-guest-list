@@ -1,30 +1,39 @@
 import { useState } from 'react';
 
 export default function App() {
-  const [lastName, setLastName] = useState('');
+  const [lastName, setLastName] = useState('Ira');
 
-  const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState('bruce');
 
   const [users, setUsers] = useState([]);
 
   const userHandleSubmit = (event) => {
     event.preventDefault();
-    setUsers([...users, { firstName, lastName }]);
+    const newUser = {
+      id: Date.now(),
+      firstName,
+      lastName,
+      attending: false,
+    };
+    setUsers([...users, newUser]);
     setFirstName('');
     setLastName('');
-    console.log('User');
+    console.log(newUser);
   };
 
   return (
     <div>
+      <h1>Guest List</h1>
       {users.map((user) => {
         return (
-          <h1 key={user.firstName}>
-            {user.firstName} {user.lastName}
-          </h1>
+          <div key={user.id} data-test-id="guest">
+            <h1>
+              {user.firstName} {user.lastName} <button onClick={}>remove</button>
+            </h1>
+          </div>
         );
       })}
-      <h1>Guest List</h1>
+
       <form onSubmit={userHandleSubmit}>
         <label>
           First name
