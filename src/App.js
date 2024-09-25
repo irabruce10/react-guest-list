@@ -21,6 +21,13 @@ export default function App() {
     console.log(newUser);
   };
 
+  function handleDelete(id) {
+    const updatedUsers = users.filter((user) => user.id !== id);
+    setUsers(updatedUsers);
+
+    console.log(updatedUsers);
+  }
+
   return (
     <div>
       <h1>Guest List</h1>
@@ -28,7 +35,8 @@ export default function App() {
         return (
           <div key={user.id} data-test-id="guest">
             <h1>
-              {user.firstName} {user.lastName} <button onClick={}>remove</button>
+              {user.firstName} {user.lastName}{' '}
+              <button onClick={(id) => handleDelete(user.id)}>remove</button>
             </h1>
           </div>
         );
