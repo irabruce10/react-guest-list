@@ -34,10 +34,18 @@ export default function App() {
       {users.map((user) => {
         return (
           <div key={user.id} data-test-id="guest">
-            <h1>
+            <div>
+              <input
+                type="checkbox"
+                aria-label={`Remove ${user.firstName} ${user.lastName}`}
+              />
               {user.firstName} {user.lastName}{' '}
-              <button onClick={(id) => handleDelete(user.id)}>remove</button>
-            </h1>
+              <button
+                aria-label={`${user.firstName} ${user.lastName} attending ${user.attending}`}
+                onClick={() => handleDelete(user.id)}>
+                remove
+              </button>
+            </div>
           </div>
         );
       })}
