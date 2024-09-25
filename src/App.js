@@ -7,6 +7,8 @@ export default function App() {
 
   const [users, setUsers] = useState([]);
 
+  const [isChecked, setIsChecked] = useState(false);
+
   const userHandleSubmit = (event) => {
     event.preventDefault();
     const newUser = {
@@ -18,14 +20,19 @@ export default function App() {
     setUsers([...users, newUser]);
     setFirstName('');
     setLastName('');
-    console.log(newUser);
   };
 
   function handleDelete(id) {
     const updatedUsers = users.filter((user) => user.id !== id);
     setUsers(updatedUsers);
+  }
 
-    console.log(updatedUsers);
+  function handleChecked(id) {
+    const updatedUsers = users.map((user) =>
+      user.id === id ? { ...user, attending: !user.attending } : user,
+    );
+
+    setUsers(updatedUsers);
   }
 
   return (
@@ -38,6 +45,8 @@ export default function App() {
               <input
                 type="checkbox"
                 aria-label={`Remove ${user.firstName} ${user.lastName}`}
+                checked={user.attending}
+                onChange={() => handleChecked(user.id)}
               />
               {user.firstName} {user.lastName}{' '}
               <button
