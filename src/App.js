@@ -105,6 +105,7 @@ export default function App() {
             <div key={`user-${user.id}`} data-test-id="guest">
               <div>
                 <input
+                  disabled={isLoading}
                   type="checkbox"
                   checked={user.attending}
                   onChange={() => handleChecked(user.id)}
@@ -114,6 +115,7 @@ export default function App() {
                 <button
                   aria-label={`Remove ${user.firstName} ${user.lastName}`}
                   onClick={() => handleDelete(user.id)}
+                  disabled={isLoading}
                 >
                   Remove
                 </button>
@@ -123,7 +125,7 @@ export default function App() {
         })
       )}
 
-      <form onSubmit={createUser}>
+      <form onSubmit={createUser} disabled={isLoading}>
         <label>
           First name
           <input
