@@ -27,7 +27,8 @@ export default function App() {
   };
 
   useEffect(() => {
-    getAllGuest();
+    const a = getAllGuest();
+    console.log(a);
   }, []);
 
   // Add new Guest
