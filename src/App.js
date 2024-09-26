@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function App() {
   const [lastName, setLastName] = useState('Ira');
@@ -7,18 +7,60 @@ export default function App() {
 
   const [users, setUsers] = useState([]);
 
-  const userHandleSubmit = (event) => {
+  const baseUrl = 'https://9rbjs-4000.csb.app/guests/';
+
+  useEffect(() => {
+    const getAllUsers = async () => {
+      const response = await fetch(`${baseUrl}`);
+      const data = await response.json();
+      console.log(data);
+      setUsers(data);
+    };
+  }, []);
+
+  const createUser = async (event) => {
     event.preventDefault();
+
+    const response = await fetch(`${baseUrl}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName, lastName, attending: false }),
+    });
+
+    if (response.ok) {
+      console.log('Form submitted successfully!');
+    }
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // const newUser = await response.json();
     const newUser = {
       id: Date.now(),
       firstName,
       lastName,
       attending: false,
     };
+
     setUsers([...users, newUser]);
+    console.log(users);
     setFirstName('');
     setLastName('');
   };
+
+  // const userHandleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const newUser = {
+  //     id: Date.now(),
+  //     firstName,
+  //     lastName,
+  //     attending: false,
+  //   };
+  //   setUsers([...users, newUser]);
+  //   setFirstName('');
+  //   setLastName('');
+  // };
 
   function handleDelete(id) {
     const updatedUsers = users.filter((user) => user.id !== id);
@@ -57,7 +99,7 @@ export default function App() {
         );
       })}
 
-      <form onSubmit={userHandleSubmit}>
+      <form onSubmit={createUser}>
         <label>
           First name
           <input
