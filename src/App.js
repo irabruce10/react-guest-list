@@ -9,13 +9,13 @@ export default function App() {
 
   const baseUrl = 'https://9rbjs-4000.csb.app/guests/';
 
+  const getAllGuest = async () => {
+    const response = await fetch(`${baseUrl}`);
+    const data = await response.json();
+    console.log(data);
+    setGuest(data);
+  };
   useEffect(() => {
-    const getAllGuest = async () => {
-      const response = await fetch(`${baseUrl}`);
-      const data = await response.json();
-      console.log(data);
-      setGuest(data);
-    };
     getAllGuest();
   }, []);
 
@@ -29,48 +29,32 @@ export default function App() {
     });
 
     if (response.ok) {
-      console.log('Form submitted successfully!');
+      const newGuest = {
+        id: Date.now(),
+        firstName,
+        lastName,
+        attending: false,
+      };
+      setGuest([...guest, newGuest]);
+
+      setFirstName('');
+      setLastName('');
     }
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
-    // const newUser = await response.json();
-    const newUser = {
-      id: Date.now(),
-      firstName,
-      lastName,
-      attending: false,
-    };
-
-    setGuest([...guest, newUser]);
-    console.log(guest);
-    setFirstName('');
-    setLastName('');
   };
-
-  // const userHandleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const newUser = {
-  //     id: Date.now(),
-  //     firstName,
-  //     lastName,
-  //     attending: false,
-  //   };
-  //   setGuest([...guest, newUser]);
-  //   setFirstName('');
-  //   setLastName('');
-  // };
 
   async function handleDelete(id) {
     const response = await fetch(`${baseUrl}${id}`, { method: 'DELETE' });
 
+    const deleteGuest = guest.filter((user) => user.id !== id);
+    setGuest(deleteGuest);
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const deleteGuest = guest.filter((user) => user.id !== id);
-    setGuest(deleteGuest);
   }
 
   async function handleChecked(id) {
