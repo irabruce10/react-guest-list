@@ -7,8 +7,6 @@ export default function App() {
 
   const [users, setUsers] = useState([]);
 
-  const [isChecked, setIsChecked] = useState(false);
-
   const userHandleSubmit = (event) => {
     event.preventDefault();
     const newUser = {
