@@ -5,17 +5,18 @@ export default function App() {
 
   const [firstName, setFirstName] = useState('bruce');
 
-  const [users, setUsers] = useState([]);
+  const [guest, setGuest] = useState([]);
 
   const baseUrl = 'https://9rbjs-4000.csb.app/guests/';
 
   useEffect(() => {
-    const getAllUsers = async () => {
+    const getAllGuest = async () => {
       const response = await fetch(`${baseUrl}`);
       const data = await response.json();
       console.log(data);
-      setUsers(data);
+      setGuest(data);
     };
+    getAllGuest();
   }, []);
 
   const createUser = async (event) => {
@@ -43,8 +44,8 @@ export default function App() {
       attending: false,
     };
 
-    setUsers([...users, newUser]);
-    console.log(users);
+    setGuest([...guest, newUser]);
+    console.log(guest);
     setFirstName('');
     setLastName('');
   };
@@ -57,28 +58,43 @@ export default function App() {
   //     lastName,
   //     attending: false,
   //   };
-  //   setUsers([...users, newUser]);
+  //   setGuest([...guest, newUser]);
   //   setFirstName('');
   //   setLastName('');
   // };
 
-  function handleDelete(id) {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    setUsers(updatedUsers);
+  async function handleDelete(id) {
+    const response = await fetch(`${baseUrl}${id}`, { method: 'DELETE' });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const deleteGuest = guest.filter((user) => user.id !== id);
+    setGuest(deleteGuest);
   }
 
-  function handleChecked(id) {
-    const updatedUsers = users.map((user) =>
+  async function handleChecked(id) {
+    const response = await fetch(`${baseUrl}${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        attending: !guest.find((user) => user.id === id).attending,
+      }),
+    });
+    // const updatedGuest = await response.json();
+    const updatedGuest = guest.map((user) =>
       user.id === id ? { ...user, attending: !user.attending } : user,
     );
 
-    setUsers(updatedUsers);
+    setGuest(updatedGuest);
   }
 
   return (
     <div>
       <h1>Guest List</h1>
-      {users.map((user) => {
+      {guest.map((user) => {
         return (
           <div key={user.id} data-test-id="guest">
             <div>
