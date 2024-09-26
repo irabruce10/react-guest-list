@@ -7,17 +7,23 @@ export default function App() {
 
   const [guest, setGuest] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const baseUrl = 'https://9rbjs-4000.csb.app/guests/';
 
   useEffect(() => {
     const getAllGuest = async () => {
       try {
+        setIsLoading(true);
+
         const response = await fetch(`${baseUrl}`);
         if (!response.ok) throw Error('Error Message');
         const data = await response.json();
         setGuest(data);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getAllGuest();
@@ -88,26 +94,31 @@ export default function App() {
   return (
     <div>
       <h1>Guest List</h1>
-      {guest.map((user) => {
-        return (
-          <div key={user.id} data-test-id="guest">
-            <div>
-              <input
-                type="checkbox"
-                aria-label={`Remove ${user.firstName} ${user.lastName}`}
-                checked={user.attending}
-                onChange={() => handleChecked(user.id)}
-              />
-              {user.firstName} {user.lastName}{' '}
-              <button
-                aria-label={`${user.firstName} ${user.lastName} attending ${user.attending}`}
-                onClick={() => handleDelete(user.id)}>
-                remove
-              </button>
+
+      {!isLoading ? (
+        guest.map((user) => {
+          return (
+            <div key={user.id} data-test-id="guest">
+              <div>
+                <input
+                  type="checkbox"
+                  aria-label={`Remove ${user.firstName} ${user.lastName}`}
+                  checked={user.attending}
+                  onChange={() => handleChecked(user.id)}
+                />
+                {user.firstName} {user.lastName}{' '}
+                <button
+                  aria-label={`${user.firstName} ${user.lastName} attending ${user.attending}`}
+                  onClick={() => handleDelete(user.id)}>
+                  remove
+                </button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <h1>Loading ...</h1>
+      )}
 
       <form onSubmit={createUser}>
         <label>
@@ -117,6 +128,7 @@ export default function App() {
             name="name"
             placeholder="First Name"
             value={firstName}
+            disabled={isLoading}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </label>
@@ -128,11 +140,14 @@ export default function App() {
             name="name"
             placeholder="Last Name"
             value={lastName}
+            disabled={isLoading}
             onChange={(e) => setLastName(e.target.value)}
           />
         </label>
         <button type="submit">Create user</button>
       </form>
+
+      <button type="button">reset All</button>
     </div>
   );
 }
