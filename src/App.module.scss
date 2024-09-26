@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: beige;
+  font-family: 'Lato', sans-serif;
+}
+.guest_container {
+  width: 1000px;
+  margin: auto;
+  text-align: center;
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5em;
+    line-height: 90%;
+    margin-top: 50px;
+    margin-bottom: 1em;
+  }
+
+  .guest_form {
+    display: block;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+
+    input {
+      width: 250px;
+      margin: auto;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      background: #fff;
+    }
+  }
+}

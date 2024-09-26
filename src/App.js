@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import styles from './App.module.scss';
 
 export default function App() {
   const [lastName, setLastName] = useState('');
@@ -94,7 +95,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <div className={styles.guest_container}>
       <h1>Guest List</h1>
 
       {isLoading ? (
@@ -125,28 +126,30 @@ export default function App() {
         })
       )}
 
-      <form onSubmit={createUser} disabled={isLoading}>
-        <label>
-          First name
-          <input
-            disabled={isLoading}
-            name="name"
-            placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </label>
+      <form
+        onSubmit={createUser}
+        disabled={isLoading}
+        className={styles.guest_form}
+      >
+        <input
+          disabled={isLoading}
+          name="name"
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+
         <br />
-        <label>
-          Last name
-          <input
-            disabled={isLoading}
-            name="name"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </label>
+
+        <input
+          disabled={isLoading}
+          name="name"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        <br />
+
         <button>Create user</button>
       </form>
     </div>
