@@ -26,15 +26,67 @@ body {
     margin: auto;
     text-align: center;
 
+    label {
+      position: relative;
+
+      span {
+        color: black;
+        font-size: 0.8em;
+        position: absolute;
+        top: -130%;
+        left: 78%;
+      }
+    }
+
     input {
       width: 250px;
       margin: auto;
       padding: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       border: none;
       border-radius: 5px;
       outline: none;
       background: #fff;
+      transition: background-color 0.2s ease;
+    }
+
+    button {
+      width: 150px;
+      margin: auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background: rgb(246, 226, 203);
+      color: black;
+      cursor: pointer;
+
+      &:hover {
+        background: rgb(230, 206, 185);
+      }
     }
   }
+
+  // @media (max-width: 768px) {
+  //   header form {
+  //     flex-direction: column;
+  //     width: 80%;
+  //   }
+  //   header button,
+  //   header input {
+  //     width: auto;
+  //   }
+  //   .main {
+  //     margin: 0 7% 0;
+  //   }
+  //   h2 {
+  //     margin: 0;
+  //   }
+  //   .main > div {
+  //     margin: 15px 0;
+  //     font-size: 0.8em;
+  //   }
+  //   li input[type='text'] {
+  //     font-size: 1.65em;
+  //   }
+  // }
 }
