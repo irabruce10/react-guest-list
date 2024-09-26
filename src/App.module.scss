@@ -27,15 +27,8 @@ body {
     text-align: center;
 
     label {
-      position: relative;
-
-      span {
-        color: black;
-        font-size: 0.8em;
-        position: absolute;
-        top: -130%;
-        left: 78%;
-      }
+      color: black;
+      font-size: 0.8em;
     }
 
     input {

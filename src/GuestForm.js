@@ -18,7 +18,7 @@ export default function GuestForm({
       className={styles.guest_form}
     >
       <label>
-        <span>First name</span>
+        First name
         <input
           disabled={isLoading}
           placeholder="Add the first name"
@@ -28,7 +28,7 @@ export default function GuestForm({
       </label>
       <br />
       <label>
-        <span>Last name</span>
+        Last name
         <input
           disabled={isLoading}
           placeholder="Add the last name"
