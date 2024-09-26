@@ -9,70 +9,80 @@ export default function App() {
 
   const baseUrl = 'https://9rbjs-4000.csb.app/guests/';
 
-  const getAllGuest = async () => {
-    const response = await fetch(`${baseUrl}`);
-    const data = await response.json();
-    console.log(data);
-    setGuest(data);
-  };
   useEffect(() => {
+    const getAllGuest = async () => {
+      try {
+        const response = await fetch(`${baseUrl}`);
+        if (!response.ok) throw Error('Error Message');
+        const data = await response.json();
+        setGuest(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
     getAllGuest();
   }, []);
 
+  // Add new Guest
+
   const createUser = async (event) => {
-    event.preventDefault();
-
-    const response = await fetch(`${baseUrl}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName, attending: false }),
-    });
-
-    if (response.ok) {
+    try {
+      event.preventDefault();
       const newGuest = {
-        id: Date.now(),
         firstName,
         lastName,
         attending: false,
       };
       setGuest([...guest, newGuest]);
 
+      const response = await fetch(`${baseUrl}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newGuest),
+      });
+
       setFirstName('');
       setLastName('');
-    }
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const result = await response.json(response);
+    } catch (error) {
+      console.error('Error creating :', error);
     }
   };
 
   async function handleDelete(id) {
-    const response = await fetch(`${baseUrl}${id}`, { method: 'DELETE' });
+    try {
+      const response = await fetch(`${baseUrl}${id}`, { method: 'DELETE' });
 
-    const deleteGuest = guest.filter((user) => user.id !== id);
-    setGuest(deleteGuest);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const deleteGuest = guest.filter((user) => user.id !== id);
+      setGuest(deleteGuest);
+      const result = await response.json(response);
+    } catch (error) {
+      console.error('Error deleting user:', error);
     }
   }
 
   async function handleChecked(id) {
-    const response = await fetch(`${baseUrl}${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        attending: !guest.find((user) => user.id === id).attending,
-      }),
-    });
-    // const updatedGuest = await response.json();
-    const updatedGuest = guest.map((user) =>
-      user.id === id ? { ...user, attending: !user.attending } : user,
-    );
+    try {
+      const response = await fetch(`${baseUrl}${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          attending: !guest.find((user) => user.id === id).attending,
+        }),
+      });
+      const updatedUser = await response.json();
+      // const updatedGuest = await response.json();
+      const updatedGuest = guest.map((user) =>
+        user.id === id ? { ...user, attending: !user.attending } : user,
+      );
 
-    setGuest(updatedGuest);
+      setGuest(updatedGuest);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
   }
 
   return (
