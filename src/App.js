@@ -127,6 +127,7 @@ export default function App() {
         <label>
           First name
           <input
+            disabled={isLoading}
             name="name"
             placeholder="First Name"
             value={firstName}
@@ -137,6 +138,7 @@ export default function App() {
         <label>
           Last name
           <input
+            disabled={isLoading}
             name="name"
             placeholder="Last Name"
             value={lastName}
