@@ -27,7 +27,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    return getAllGuest();
+    getAllGuest();
   }, []);
 
   // Add new Guest
