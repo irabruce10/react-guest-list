@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './App.module.scss';
+import GuestForm from './GuestForm';
 
 export default function App() {
   const [lastName, setLastName] = useState('');
@@ -34,8 +35,7 @@ export default function App() {
 
   // Add new Guest
 
-  async function createUser(e) {
-    e.preventDefault();
+  async function createUser() {
     try {
       const newGuest = {
         firstName,
@@ -98,6 +98,15 @@ export default function App() {
     <div className={styles.guest_container}>
       <h1>Guest List</h1>
 
+      <GuestForm
+        createUser={createUser}
+        isLoading={isLoading}
+        firstName={firstName}
+        lastName={lastName}
+        setFirstName={setFirstName}
+        setLastName={setLastName}
+      />
+
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -126,7 +135,7 @@ export default function App() {
         })
       )}
 
-      <form
+      {/* <form
         onSubmit={createUser}
         disabled={isLoading}
         className={styles.guest_form}
@@ -155,7 +164,7 @@ export default function App() {
 
         <br />
         <button>Create user</button>
-      </form>
+      </form> */}
     </div>
   );
 }
