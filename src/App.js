@@ -82,7 +82,7 @@ export default function App() {
         }),
       });
       await response.json();
-      // const updatedGuest = await response.json();
+
       const updatedGuest = guest.map((user) =>
         user.id === id ? { ...user, attending: !user.attending } : user,
       );
@@ -106,16 +106,16 @@ export default function App() {
               <div>
                 <input
                   type="checkbox"
-                  aria-label={`Remove ${user.firstName} ${user.lastName}`}
                   checked={user.attending}
                   onChange={() => handleChecked(user.id)}
+                  aria-label={`${user.firstName} ${user.lastName} attending ${user.attending}`}
                 />
                 {user.firstName} {user.lastName}{' '}
                 <button
-                  aria-label={`${user.firstName} ${user.lastName} attending ${user.attending}`}
+                  aria-label={`Remove ${user.firstName} ${user.lastName}`}
                   onClick={() => handleDelete(user.id)}
                 >
-                  remove
+                  Remove
                 </button>
               </div>
             </div>
