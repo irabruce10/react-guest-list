@@ -112,24 +112,34 @@ export default function App() {
       ) : (
         guest.map((user) => {
           return (
-            <div key={`user-${user.id}`} data-test-id="guest">
-              <div>
-                <input
-                  disabled={isLoading}
-                  type="checkbox"
-                  checked={user.attending}
-                  onChange={() => handleChecked(user.id)}
-                  aria-label={`${user.firstName} ${user.lastName} attending ${user.attending}`}
-                />
-                {user.firstName} {user.lastName}{' '}
-                <button
-                  aria-label={`Remove ${user.firstName} ${user.lastName}`}
-                  onClick={() => handleDelete(user.id)}
-                  disabled={isLoading}
-                >
-                  Remove
-                </button>
-              </div>
+            <div
+              key={`user-${user.id}`}
+              data-test-id="guest"
+              className={styles.guest_list}
+            >
+              <ul>
+                <li>
+                  <input
+                    disabled={isLoading}
+                    type="checkbox"
+                    checked={user.attending}
+                    onChange={() => handleChecked(user.id)}
+                    aria-label={`${user.firstName} ${user.lastName} attending ${user.attending}`}
+                  />
+
+                  <h2>
+                    {user.firstName} {user.lastName}
+                  </h2>
+
+                  <button
+                    aria-label={`Remove ${user.firstName} ${user.lastName}`}
+                    onClick={() => handleDelete(user.id)}
+                    disabled={isLoading}
+                  >
+                    Remove
+                  </button>
+                </li>
+              </ul>
             </div>
           );
         })
