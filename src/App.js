@@ -97,7 +97,9 @@ export default function App() {
     <div>
       <h1>Guest List</h1>
 
-      {!isLoading ? (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
         guest.map((user) => {
           return (
             <div key={`user-${user.id}`} data-test-id="guest">
@@ -119,8 +121,6 @@ export default function App() {
             </div>
           );
         })
-      ) : (
-        <h1>Loading ...</h1>
       )}
 
       <form onSubmit={createUser}>
