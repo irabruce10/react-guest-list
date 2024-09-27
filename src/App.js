@@ -1,8 +1,11 @@
+// Importing necessary modules
+
 import { useEffect, useState } from 'react';
 import styles from './App.module.scss';
 import GuestForm from './GuestForm';
 import Loader from 'react-loader';
 
+// Defining the App component
 export default function App() {
   const [lastName, setLastName] = useState('');
 
@@ -14,6 +17,7 @@ export default function App() {
 
   const baseUrl = 'https://9rbjs-4000.csb.app/guests/';
 
+  // Fetching guest data
   const getAllGuest = async () => {
     try {
       setIsLoading(true);
@@ -29,14 +33,14 @@ export default function App() {
     }
   };
 
+  // Initializing guest data with useEffect
   useEffect(() => {
     const a = getAllGuest();
     console.log(a);
   }, []);
 
-  // Add new Guest
-
-  async function createUser() {
+  // Creating a new guest
+  async function createGuest() {
     try {
       const newGuest = {
         firstName,
@@ -59,7 +63,7 @@ export default function App() {
       console.error('Error creating :', error);
     }
   }
-
+  // Deleting a guest
   async function handleDelete(id) {
     try {
       const response = await fetch(`${baseUrl}${id}`, { method: 'DELETE' });
@@ -71,7 +75,7 @@ export default function App() {
       console.error('Error deleting user:', error);
     }
   }
-
+  // Updating a guest (updating attending status)
   async function handleChecked(id) {
     try {
       const response = await fetch(`${baseUrl}${id}`, {
@@ -94,12 +98,12 @@ export default function App() {
       console.error('Error deleting user:', error);
     }
   }
-
+  // Filtering guests (allAttendingGuests)
   async function allAttendingGuests() {
     const response = await fetch(baseUrl);
     const data = await response.json();
 
-    const allAttending = data.filter((g) => g.attending === true);
+    const allAttending = data.filter((guests) => guests.attending === true);
     setGuest(allAttending);
     if (!allAttending) {
       const p = document.createElement('div');
@@ -109,14 +113,14 @@ export default function App() {
       setGuest(allAttending);
     }
   }
-
+  // Filtering guests  (nonAttendingGuests)
   async function nonAttendingGuests() {
     const response = await fetch(baseUrl);
     const data = await response.json();
-    const nonAttending = data.filter((g) => g.attending === false);
+    const nonAttending = data.filter((guests) => guests.attending === false);
     setGuest(nonAttending);
   }
-
+  // Filtering guests (allGuests)
   async function allGuests() {
     const response = await fetch(baseUrl);
 
@@ -127,10 +131,11 @@ export default function App() {
   }
 
   return (
+    // Rendering the guest list
     <div className={styles.guest_container}>
       <h1>Guest List</h1>
       <GuestForm
-        createUser={createUser}
+        createUser={createGuest}
         isLoading={isLoading}
         firstName={firstName}
         lastName={lastName}
