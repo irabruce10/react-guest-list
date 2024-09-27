@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './App.module.scss';
 import GuestForm from './GuestForm';
+import Loader from 'react-loader';
 
 export default function App() {
   const [lastName, setLastName] = useState('');
@@ -94,16 +95,6 @@ export default function App() {
     }
   }
 
-  async function resetHandle() {
-    const response = await fetch(baseUrl);
-
-    const updatedData = await response.json();
-
-    console.log(updatedData);
-    setGuest([]);
-    console.log('updatedData');
-  }
-
   async function allAttendingGuests() {
     const response = await fetch(baseUrl);
     const data = await response.json();
@@ -145,14 +136,17 @@ export default function App() {
         lastName={lastName}
         setFirstName={setFirstName}
         setLastName={setLastName}
-        resetHandle={resetHandle}
         allAttendingGuests={allAttendingGuests}
         nonAttendingGuests={nonAttendingGuests}
         allGuests={allGuests}
       />
 
       {isLoading ? (
-        <p>Loading...</p>
+        <div>
+          <p>Loading...</p>
+
+          <Loader loaded={false} className={styles.loader} />
+        </div>
       ) : (
         guest.map((user) => {
           return (

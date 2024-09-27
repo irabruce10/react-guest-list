@@ -7,7 +7,6 @@ export default function GuestForm({
   lastName,
   setFirstName,
   setLastName,
-  resetHandle,
   allAttendingGuests,
   nonAttendingGuests,
   allGuests,
@@ -47,10 +46,9 @@ export default function GuestForm({
       </form>{' '}
       <div className={styles.filters}>
         {' '}
-        <button onClick={resetHandle}>Reset</button>
-        <button onClick={nonAttendingGuests}>non-att</button>
-        <button onClick={allAttendingGuests}>att</button>
-        <button onClick={allGuests}>all</button>
+        <button onClick={nonAttendingGuests}>non-attending</button>
+        <button onClick={allAttendingGuests}>attending</button>
+        <button onClick={allGuests}>all Guest</button>
       </div>
     </>
   );
