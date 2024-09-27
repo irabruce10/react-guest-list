@@ -94,10 +94,50 @@ export default function App() {
     }
   }
 
+  async function resetHandle() {
+    const response = await fetch(baseUrl);
+
+    const updatedData = await response.json();
+
+    console.log(updatedData);
+    setGuest([]);
+    console.log('updatedData');
+  }
+
+  async function allAttendingGuests() {
+    const response = await fetch(baseUrl);
+    const data = await response.json();
+
+    const allAttending = data.filter((g) => g.attending === true);
+    setGuest(allAttending);
+    if (!allAttending) {
+      const p = document.createElement('div');
+      p.textContent = 'No Attending Guests Found!';
+      document.body.appendChild(p);
+    } else {
+      setGuest(allAttending);
+    }
+  }
+
+  async function nonAttendingGuests() {
+    const response = await fetch(baseUrl);
+    const data = await response.json();
+    const nonAttending = data.filter((g) => g.attending === false);
+    setGuest(nonAttending);
+  }
+
+  async function allGuests() {
+    const response = await fetch(baseUrl);
+
+    const updatedData = await response.json();
+
+    console.log(updatedData);
+    setGuest(updatedData);
+  }
+
   return (
     <div className={styles.guest_container}>
       <h1>Guest List</h1>
-
       <GuestForm
         createUser={createUser}
         isLoading={isLoading}
@@ -105,6 +145,10 @@ export default function App() {
         lastName={lastName}
         setFirstName={setFirstName}
         setLastName={setLastName}
+        resetHandle={resetHandle}
+        allAttendingGuests={allAttendingGuests}
+        nonAttendingGuests={nonAttendingGuests}
+        allGuests={allGuests}
       />
 
       {isLoading ? (
