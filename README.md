@@ -18,5 +18,11 @@
   - [x] Save any changes to the API
   - [x] Load the guest list from this API
 - [x] While the guest list is first loaded from the API (on page load):
+
   - [x] Show a loading message containing the text `Loading...`
   - [x] Disable the form fields
+
+- [x] Filters:
+  - [x] Filter to show only non-attending guests
+  - [x] Filter to show only attending guests
+  - [x] Button to reset filters to again show all of the guests
